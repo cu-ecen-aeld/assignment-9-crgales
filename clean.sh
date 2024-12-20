@@ -1,4 +1,4 @@
 #!/bin/sh
-# Cleans Buildroot
+# Cleans Buildroot using distclean
 
 make -C buildroot distclean
