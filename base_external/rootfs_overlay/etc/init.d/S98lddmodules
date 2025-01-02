@@ -1,0 +1,40 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          lddmodules
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Load custom kernel modules
+# Description:       This script will load custom kernel modules at boot time.
+### END INIT INFO
+
+case "$1" in
+    start)
+        echo "Loading custom kernel modules..."
+        insmod /lib/modules/$(uname -r)/extra/hello.ko
+        /etc/ldd_scripts/module_load faulty
+        /etc/ldd_scripts/scull_load
+        ;;
+    stop)
+        echo "Unloading custom kernel modules..."
+        rmmod hello
+        /etc/ldd_scripts/module_unload faulty
+        /etc/ldd_scripts/scull_unload
+        ;;
+    restart|reload|force-reload)
+        echo "Reloading custom kernel modules..."
+        $0 stop
+        $0 start
+        ;;
+    status)
+        echo "Status of custom kernel modules..."
+        # Insert commands to check the status of your kernel modules here
+        ;;
+    *)
+        echo "Usage: /etc/init.d/S98lddmodules {start|stop|restart|status}"
+        exit 1
+        ;;
+esac
+
+exit 0

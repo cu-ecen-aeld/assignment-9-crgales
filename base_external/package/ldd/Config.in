@@ -1,0 +1,4 @@
+config BR2_PACKAGE_LDD
+    bool "ldd"
+    help
+      This is a sample package for learning device drivers.
